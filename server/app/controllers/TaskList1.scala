@@ -6,6 +6,14 @@ import play.api.i18n._
 
 @Singleton
 class TaskList1 @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+  def login = Action {
+    Ok(views.html.login1())
+  }
+
+  def validateLoginGet(username: String, password: String) = Action {
+    Ok(s"$username logged in with $password.")
+  }
+
   def taskList = Action {
     val tasks = List("task1", "task2", "task3")
     Ok(views.html.taskList1(tasks))
