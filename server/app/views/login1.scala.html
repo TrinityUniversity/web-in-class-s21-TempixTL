@@ -4,11 +4,23 @@
 @main("Login") {
   <h2>Login</h2>
 
-  <form method="GET" action="validate1">
+  <form method="GET" action="validateGet1">
     <label for="username">Username:</label>
     <input type="text" name="username"></input>
+    <br>
     <label for="password">Password:</label>
     <input type="password" name="password"></input>
+    <br>
+    <input type="submit"></input>
+  </form>
+
+  <form method="POST" action="validate1">
+    <label for="username">Username:</label>
+    <input type="text" name="username"></input>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" name="password"></input>
+    <br>
     <input type="submit"></input>
   </form>
 }
