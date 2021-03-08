@@ -7,7 +7,7 @@ import models.TaskListInMemoryModel
 
 @Singleton
 class TaskList1 @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
-  def login = Action {
+  def login = Action { implicit request =>
     Ok(views.html.login1())
   }
 
@@ -15,7 +15,7 @@ class TaskList1 @Inject()(cc: ControllerComponents) extends AbstractController(c
     Ok(s"$username logged in with $password.")
   }
 
-  def validateLoginPost = Action { request =>
+  def validateLoginPost = Action { implicit request =>
     val postVals = request.body.asFormUrlEncoded
     postVals.map { args => 
       val username = args("username").head
@@ -29,7 +29,7 @@ class TaskList1 @Inject()(cc: ControllerComponents) extends AbstractController(c
     }.getOrElse(Redirect(routes.TaskList1.login()))
   }
 
-  def createUser = Action { request =>
+  def createUser = Action { implicit request =>
     val postVals = request.body.asFormUrlEncoded
     postVals.map { args => 
       val username = args("username").head
@@ -43,7 +43,7 @@ class TaskList1 @Inject()(cc: ControllerComponents) extends AbstractController(c
     }.getOrElse(Redirect(routes.TaskList1.login()))
   }
 
-  def taskList = Action { request =>
+  def taskList = Action { implicit request =>
     val usernameOpt = request.session.get("username")
     usernameOpt.map { username =>
       val tasks = TaskListInMemoryModel.getTasks(username)

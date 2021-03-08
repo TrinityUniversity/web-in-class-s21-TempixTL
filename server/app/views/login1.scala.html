@@ -1,5 +1,5 @@
 @* login1 Template File *@
-@()
+@()(implicit request: RequestHeader)
 
 @main("Login") {
   <h2>Login</h2>
@@ -16,6 +16,7 @@
   </form>
 
   <form method="POST" action="@routes.TaskList1.validateLoginPost()">
+    @helper.CSRF.formField
     <h3>Login with POST</h3>
     <label for="username">Username:</label>
     <input type="text" name="username"></input>
@@ -27,6 +28,7 @@
   </form>
 
   <form method="POST" action="@routes.TaskList1.createUser()">
+    @helper.CSRF.formField
     <h3>Create User</h3>
     <label for="username">Username:</label>
     <input type="text" name="username"></input>
