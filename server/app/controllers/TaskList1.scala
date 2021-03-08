@@ -24,7 +24,7 @@ class TaskList1 @Inject()(cc: ControllerComponents) extends AbstractController(c
       if (TaskListInMemoryModel.validateUser(username, password)) {
         Redirect(routes.TaskList1.taskList()).withSession("username" -> username)
       } else {
-        Redirect(routes.TaskList1.login())
+        Redirect(routes.TaskList1.login()).flashing("error" -> "Invalid username/passsword combination.")
       }
     }.getOrElse(Redirect(routes.TaskList1.login()))
   }
@@ -38,7 +38,7 @@ class TaskList1 @Inject()(cc: ControllerComponents) extends AbstractController(c
       if (TaskListInMemoryModel.createUser(username, password)) {
         Redirect(routes.TaskList1.taskList()).withSession("username" -> username)
       } else {
-        Redirect(routes.TaskList1.login())
+        Redirect(routes.TaskList1.login()).flashing("error" -> "User creation failed.")
       }
     }.getOrElse(Redirect(routes.TaskList1.login()))
   }
