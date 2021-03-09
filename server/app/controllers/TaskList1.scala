@@ -38,14 +38,14 @@ class TaskList1 @Inject()(cc: MessagesControllerComponents) extends MessagesAbst
     }.getOrElse(Redirect(routes.TaskList1.login()))
   }
 
-  def validateLoginForm = Action { implicit request =>
+  def validateCreateUserForm = Action { implicit request =>
     loginForm.bindFromRequest().fold(
       formWithErrors => BadRequest(views.html.login1(formWithErrors)),
       ld => 
-        if (TaskListInMemoryModel.validateUser(ld.username, ld.password)) {
+        if (TaskListInMemoryModel.createUser(ld.username, ld.password)) {
           Redirect(routes.TaskList1.taskList()).withSession("username" -> ld.username)
         } else {
-          Redirect(routes.TaskList1.login()).flashing("error" -> "Invalid username/passsword combination.")
+          Redirect(routes.TaskList1.login()).flashing("error" -> "User creation failed")
         }
     )
   }

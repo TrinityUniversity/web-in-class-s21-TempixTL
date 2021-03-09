@@ -27,15 +27,6 @@
     <input type="submit"></input>
   </form>
 
-  @helper.form(action = routes.TaskList1.validateLoginForm()) {
-    @helper.CSRF.formField
-    @helper.inputText(loginForm("Username"))
-    @helper.inputText(loginForm("Password"))
-    <div class="form-actions">
-      <button type="submit">Login</button>
-    </div>
-  }
-
   <form method="POST" action="@routes.TaskList1.createUser()">
     @helper.CSRF.formField
     <h3>Create User</h3>
@@ -47,4 +38,15 @@
     <br>
     <input type="submit"></input>
   </form>
+
+  @helper.form(action = routes.TaskList1.validateCreateUserForm()) {
+    @helper.CSRF.formField
+    <h3>Create User Form</h3>
+    @helper.inputText(loginForm("Username"))
+    @helper.inputText(loginForm("Password"))
+    <div class="form-actions">
+      <button type="submit">Login</button>
+    </div>
+  }
+
 }
