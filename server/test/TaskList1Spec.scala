@@ -16,16 +16,15 @@ class TaskList1Spec extends PlaySpec with GuiceOneServerPerSuite with OneBrowser
       click on "username-login"
       textField("username-login").value = "tommylau"
       click on "password-login"
-      pwdField("password").value = "mypass"
+      pwdField("password-login").value = "mypass"
       submit()
 
       eventually {
-        println("in eventually")
-        println(currentUrl)
-        pageTitle mustBe "Login"
+        pageTitle mustBe "Task List"
 
         find(cssSelector("h2")).isEmpty mustBe false
         find(cssSelector("h2")).foreach(e => e.text mustBe "Task List")
+        findAll(cssSelector("li")).toList.map(_.text) mustBe List("testing", "rollerblade", "sleep")
       }
     }
   }
