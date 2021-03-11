@@ -6,8 +6,8 @@ import play.api.test.FakeRequest
 
 class ControllerSpec extends PlaySpec {
   "Application#index" must {
+    val controller = new Application(Helpers.stubControllerComponents())
     "give back expected page" in {
-      val controller = new Application(Helpers.stubControllerComponents())
       val result = controller.index.apply(FakeRequest())
       val bodyText = contentAsString(result)
 
