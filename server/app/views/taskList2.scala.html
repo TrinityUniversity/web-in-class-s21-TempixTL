@@ -4,11 +4,7 @@
 
 <ul>
   @for((task, i) <- tasks.zipWithIndex) {
-    <li>@task</li>
-    <form method="POST" action="@routes.TaskList1.deleteTask()">
-      <input type="hidden" name="index" value="@i"/>
-      <input type="submit" value="Delete"/>
-    </form>
+    <li onclick="deleteTask(@i)">@task</li>
   }
 </ul>
 
