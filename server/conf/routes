@@ -27,6 +27,8 @@ GET        /login2                       controllers.TaskList2.login
 GET        /validate2                    controllers.TaskList2.validate(username, password)
 GET        /create2                      controllers.TaskList2.createUser(username, password)
 GET        /deleteTask2                  controllers.TaskList2.deleteTask(index: Int)
+GET        /addTask2                     controllers.TaskList2.addTask(task)
+GET        /logout2                      controllers.TaskList2.logout
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)

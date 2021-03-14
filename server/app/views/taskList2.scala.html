@@ -8,11 +8,9 @@
   }
 </ul>
 
-<form method="POST" action="@routes.TaskList1.addTask()">
-  <input type="text" name="newTask"></input>
-  <input type="submit"></input>
-</form>
+<input type="text" id="newTask"></input>
+<button onclick="addTask()">Add Task</button>
 
 <div>
-  <a href="@routes.TaskList1.logout()">Logout</a>
+  <a href="@routes.TaskList2.logout()">Logout</a>
 </div>
