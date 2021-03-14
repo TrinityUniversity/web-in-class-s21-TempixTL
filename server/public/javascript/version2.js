@@ -1,6 +1,7 @@
 'use strict';
 
-$('#contents').load('/login2')
+const loginRoute = $('#loginRoute').val();
+$('#contents').load(loginRoute);
 
 function login() {
   const username = $('#loginName').val();
