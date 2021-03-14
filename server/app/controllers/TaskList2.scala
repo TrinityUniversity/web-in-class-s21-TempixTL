@@ -10,11 +10,21 @@ import play.api.data.Forms._
 @Singleton
 class TaskList2 @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
   def load = Action { implicit request =>
-    Ok(views.html.version2Main())
+    val usernameOpt = request.session.get("username")
+    usernameOpt.map { username =>
+      Ok(views.html.version2Main(routes.TaskList2.taskList().toString))
+    }.getOrElse(Ok(views.html.version2Main(routes.TaskList2.login().toString)))
   }
 
   def login = Action {
     Ok(views.html.login2())
+  }
+
+  def taskList = Action { implicit request =>
+    val usernameOpt = request.session.get("username")
+    usernameOpt.map { username =>
+      Ok(views.html.taskList2(TaskListInMemoryModel.getTasks(username)))
+    }.getOrElse(Ok(views.html.login2()))
   }
 
   def validate = Action { implicit request =>
