@@ -50,6 +50,6 @@ class TaskList2 @Inject()(cc: ControllerComponents) extends AbstractController(c
   }
 
   def logout = Action {
-    Redirect(routes.TaskList2.login()).withNewSession
+    Redirect(routes.TaskList2.load()).withNewSession
   }
 }

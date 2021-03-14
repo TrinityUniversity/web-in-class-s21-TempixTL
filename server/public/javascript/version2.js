@@ -20,5 +20,5 @@ function deleteTask(index) {
 
 function addTask() {
   const task = $('#newTask').val();
-  $('#contents').load('/addTask2?task=' + task);
+  $('#contents').load('/addTask2?task=' + encodeURIComponent(task));
 }
