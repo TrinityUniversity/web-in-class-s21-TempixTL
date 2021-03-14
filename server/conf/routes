@@ -29,6 +29,7 @@ GET        /create2                      controllers.TaskList2.createUser(userna
 GET        /deleteTask2                  controllers.TaskList2.deleteTask(index: Int)
 GET        /addTask2                     controllers.TaskList2.addTask(task)
 GET        /logout2                      controllers.TaskList2.logout
+GET        /generatedJS                  controllers.TaskList2.generatedJS
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
