@@ -16,4 +16,12 @@ class TaskList2 @Inject()(cc: ControllerComponents) extends AbstractController(c
   def login = Action {
     Ok(views.html.login2())
   }
+
+  def validate(username: String, password: String) = Action {
+    if (TaskListInMemoryModel.validateUser(username, password)) {
+      Ok(views.html.taskList2(TaskListInMemoryModel.getTasks(username))).withSession("username" -> username)
+    } else {
+      Ok(views.html.login2())
+    }
+  }
 }
