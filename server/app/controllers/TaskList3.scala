@@ -18,10 +18,6 @@ class TaskList3 @Inject() (cc: ControllerComponents) extends AbstractController(
     Ok(views.html.version3Main())
   }
     
-  def data = Action {
-    Ok(Json.toJson(Seq("a", "b", "c")))
-  }
-    
   def validate = Action { implicit request =>
     request.body.asJson.map { body =>
       Json.fromJson[UserData](body) match {
@@ -34,10 +30,17 @@ class TaskList3 @Inject() (cc: ControllerComponents) extends AbstractController(
                 "username" -> username,
                 "csrfToken" -> play.filters.csrf.CSRF.getToken.get.value)
           } else {
-            Ok(views.html.login2())
+            Ok(Json.toJson(false))
           }
         case e @ JsError(_) => Redirect(routes.TaskList3.load())
       }
     }.getOrElse(Redirect(routes.TaskList3.load()))
+  }
+
+  def taskList = Action { implicit request =>
+    val usernameOpt = request.session.get("username")
+    usernameOpt.map { username =>
+      Ok(Json.toJson(TaskListInMemoryModel.getTasks(username)))
+    }.getOrElse(Ok(Json.toJson(Seq.empty[String])))
   }
 }
