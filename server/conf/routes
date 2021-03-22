@@ -43,6 +43,7 @@ GET        /logout3                      controllers.TaskList3.logout
 
 # Routes for WebSocket Chat application
 GET        /chat                         controllers.WebSocketChat.index
+GET        /chatSocket                   controllers.WebSocketChat.socket
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
