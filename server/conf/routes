@@ -36,6 +36,7 @@ GET        /generatedJS                  controllers.TaskList2.generatedJS
 GET        /load3                        controllers.TaskList3.load
 POST       /validate3                    controllers.TaskList3.validate
 GET        /taskList3                    controllers.TaskList3.taskList
+POST       /addTask3                     controllers.TaskList3.addTask
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
