@@ -17,4 +17,8 @@ inputField.onkeydown = (event) => {
   }
 }
 
-socket.onopen = () => socket.send('New user connected.');
+socket.onopen = (event) => socket.send('New user connected.');
+
+socket.onmessage = (event) => {
+  outputArea.value += '\n' + event.data;
+}

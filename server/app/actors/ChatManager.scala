@@ -11,7 +11,7 @@ class ChatManager extends Actor {
 
   def receive: Receive = {
     case NewChatter(chatter) => chatters ::= chatter
-    case Message(msg) =>
+    case Message(msg) => for (c <- chatters) c ! ChatActor.SendMessage(msg)
     case m => println("Unhandled message in ChatManager: " + m)
   }
 }
