@@ -9,3 +9,5 @@ const outputArea = document.getElementById('chat-area');
 
 const socketRoute = document.getElementById('ws-route').value;
 const socket = new WebSocket(socketRoute.replace('http', 'ws'));
+
+socket.onopen(() => socket.send('Test message'));
