@@ -41,6 +41,9 @@ POST       /addTask3                     controllers.TaskList3.addTask
 POST       /deleteTask3                  controllers.TaskList3.deleteTask
 GET        /logout3                      controllers.TaskList3.logout
 
+# Routes for WebSocket Chat application
+GET        /chat                         controllers.WebSocketChat.index
+
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)
 GET        /versionedAssets/*file        controllers.Assets.versioned(path="/public", file: Asset)
