@@ -96,6 +96,8 @@ class TaskListComponent extends React.Component {
     super(props);
     this.state = {
       tasks: [],
+      newTask: '',
+      taskMessage: '',
     };
   }
 
@@ -109,17 +111,43 @@ class TaskListComponent extends React.Component {
       .then(tasks => this.setState({ tasks }));
   }
 
+  addTask() {
+    const task = this.state.newTask;
+
+    fetch(addRoute, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+      body: JSON.stringify(task),
+    }).then(res => res.json()).then(data => {
+      if (data) {
+        this.setState({newTask: ''});
+        this.loadTasks();
+      } else {
+        this.setState({taskMessage: 'Failed to add tasks'});
+      }
+    });
+  }
+
+  handleChange(e) {
+    this.setState({ newTask: e.target.value });
+  }
+
+  handleAddClick(e) {
+    this.addTask();
+  }
+
   render() {
     return ce('div', null,
       'Task List',
       ce('br'),
       ce('ul', null,
-        this.state.tasks.map((task, index) => ce('li', null, task)),
+        this.state.tasks.map((task, index) => ce('li', { key: index }, task)),
       ),
       ce('br'),
       ce('div', null,
-        ce('input', {type: 'text'}),
-        ce('button', null, 'Add Task'),
+        ce('input', {type: 'text', value: this.state.newTask, onChange: e => this.handleChange(e) }),
+        ce('button', {onClick: e => this.handleAddClick(e)}, 'Add Task'),
+        this.state.taskMessage,
       ),
       ce('br'),
       ce('button', { onClick: e => this.props.doLogout() }, 'Logout'),
