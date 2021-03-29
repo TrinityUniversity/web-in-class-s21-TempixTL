@@ -19,7 +19,7 @@ class Version4MainComponent extends React.Component {
 
   render() {
     if (this.state.loggedIn) {
-      return ce(TaskListComponent);
+      return ce(TaskListComponent, { doLogout: () => this.setState({ loggedIn: false })});
     } else {
       return ce(LoginComponent, { doLogin: () => this.setState({ loggedIn: true }) });
     }
@@ -92,8 +92,38 @@ class LoginComponent extends React.Component {
 }
 
 class TaskListComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tasks: [],
+    };
+  }
+
+  componentDidMount() {
+    this.loadTasks();
+  }
+
+  loadTasks() {
+    fetch(tasksRoute)
+      .then(res => res.json())
+      .then(tasks => this.setState({ tasks }));
+  }
+
   render() {
-    return ce('div', null, 'Task List');
+    return ce('div', null,
+      'Task List',
+      ce('br'),
+      ce('ul', null,
+        this.state.tasks.map((task, index) => ce('li', null, task)),
+      ),
+      ce('br'),
+      ce('div', null,
+        ce('input', {type: 'text'}),
+        ce('button', null, 'Add Task'),
+      ),
+      ce('br'),
+      ce('button', { onClick: e => this.props.doLogout() }, 'Logout'),
+    );
   }
 }
 
