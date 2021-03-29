@@ -1,39 +1,74 @@
 'use strict';
 
+const csrfToken = document.getElementById('csrfToken').value;
+const validateRoute = document.getElementById('validateRoute').value;
+const tasksRoute = document.getElementById('tasksRoute').value;
+const addRoute = document.getElementById('addRoute').value;
+const createRoute = document.getElementById('createRoute').value;
+const deleteRoute = document.getElementById('deleteRoute').value;
+const logoutRoute = document.getElementById('logoutRoute').value;
 const ce = React.createElement;
 
 class LoginComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {loginName: '', loginPass: '', createName: '', createPass: ''};
+    this.state = {
+      loginName: '',
+      loginPass: '',
+      loginMessage: '',
+      createName: '',
+      createPass: '',
+      createMessage: '',
+    };
   }
 
   changeHandler(e) {
-    console.log(e.target['id']);
+    this.setState({ [e.target['id']]: e.target.value });
+  }
+
+  login(e) {
+    const username = this.state.loginName;
+    const password = this.state.loginPass;
+
+    fetch(validateRoute, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+      body: JSON.stringify({ username, password }),
+    }).then(res => res.json()).then(data => {
+      if (data) {
+        // document.getElementById('login-section').hidden = true;
+        // document.getElementById('task-section').hidden = false;
+        // document.getElementById('login-message').innerHTML = '';
+        // document.getElementById('create-message').innerHTML = '';
+        // loadTasks();
+      } else {
+        this.setState({ loginMessage: 'Login failed'});
+      }
+    });
   }
 
   render() {
     return ce('div', null,
       ce('h2', null, 'Login:'),
       ce('br'),
-      ce('label', {for: 'loginName'}, 'Username:'),
+      ce('label', {htmlFor: 'loginName'}, 'Username:'),
       ce('input', {id: 'loginName', name: 'loginName', type: 'text', value: this.state.loginName, onChange: e => this.changeHandler(e)}),
       ce('br'),
-      ce('label', {for: 'loginPass'}, 'Password:'),
+      ce('label', {htmlFor: 'loginPass'}, 'Password:'),
       ce('input', {id: 'loginPass', name: 'loginPass', type: 'password', value: this.state.loginPass, onChange: e => this.changeHandler(e)}),
       ce('br'),
       ce('button', {onClick: e => this.login(e)}, 'Login'),
-      // span #login-message
+      ce('span', {id: 'login-message'}, this.state.loginMessage),
       ce('h2', null, 'Create User:'),
       ce('br'),
-      ce('label', {for: 'createName'}, 'Username:'),
+      ce('label', {htmlFor: 'createName'}, 'Username:'),
       ce('input', {id: 'createName', name: 'createName', type: 'text', value: this.state.createName, onChange: e => this.changeHandler(e)}),
       ce('br'),
-      ce('label', {for: 'createPass'}, 'Password:'),
+      ce('label', {htmlFor: 'createPass'}, 'Password:'),
       ce('input', {id: 'createPass', name: 'createPass', type: 'password', value: this.state.createPass, onChange: e => this.changeHandler(e)}),
       ce('br'),
       ce('button', {onClick: e => this.createUser(e)}, 'Create User'),
-      // span #create-message
+      ce('span', {id: 'create-message'}, this.state.createMessage),
     );
   }
 }
