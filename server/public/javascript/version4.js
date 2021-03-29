@@ -9,6 +9,23 @@ const deleteRoute = document.getElementById('deleteRoute').value;
 const logoutRoute = document.getElementById('logoutRoute').value;
 const ce = React.createElement;
 
+class Version4MainComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: false,
+    };
+  }
+
+  render() {
+    if (this.state.loggedIn) {
+      return ce(TaskListComponent);
+    } else {
+      return ce(LoginComponent, { doLogin: () => this.setState({ loggedIn: true }) });
+    }
+  }
+}
+
 class LoginComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -36,6 +53,7 @@ class LoginComponent extends React.Component {
       body: JSON.stringify({ username, password }),
     }).then(res => res.json()).then(data => {
       if (data) {
+        this.props.doLogin();
         // document.getElementById('login-section').hidden = true;
         // document.getElementById('task-section').hidden = false;
         // document.getElementById('login-message').innerHTML = '';
@@ -73,10 +91,14 @@ class LoginComponent extends React.Component {
   }
 }
 
+class TaskListComponent extends React.Component {
+  render() {
+    return ce('div', null, 'Task List');
+  }
+}
+
 ReactDOM.render(
-  ce(LoginComponent, null,
-    null
-  ),
+  ce(Version4MainComponent),
   document.getElementById('react-root')
 );
 /*
