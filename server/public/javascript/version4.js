@@ -65,6 +65,23 @@ class LoginComponent extends React.Component {
     });
   }
 
+  createUser() {
+    const username = this.state.createName;
+    const password = this.state.createPass;
+
+    fetch(createRoute, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+      body: JSON.stringify({ username, password }),
+    }).then(res => res.json()).then(data => {
+      if (data) {
+        this.props.doLogin();
+      } else {
+        this.setState({ createMessage: 'User creation failed'});
+      }
+    });
+  }
+
   render() {
     return ce('div', null,
       ce('h2', null, 'Login:'),
@@ -120,10 +137,25 @@ class TaskListComponent extends React.Component {
       body: JSON.stringify(task),
     }).then(res => res.json()).then(data => {
       if (data) {
-        this.setState({newTask: ''});
+        this.setState({taskMessage: '', newTask: ''});
         this.loadTasks();
       } else {
         this.setState({taskMessage: 'Failed to add tasks'});
+      }
+    });
+  }
+
+  deleteTask(i) {
+    fetch(deleteRoute, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Csrf-Token': csrfToken},
+      body: JSON.stringify(i),
+    }).then(res => res.json()).then(data => {
+      if (data) {
+        this.setState({ taskMessage: '' });
+        this.loadTasks();
+      } else {
+        this.setState({ taskMessage: 'Failed to delete' });
       }
     });
   }
@@ -136,12 +168,16 @@ class TaskListComponent extends React.Component {
     this.addTask();
   }
 
+  handleDeleteClick(e, index) {
+    this.deleteTask(index);
+  }
+
   render() {
     return ce('div', null,
       'Task List',
       ce('br'),
       ce('ul', null,
-        this.state.tasks.map((task, index) => ce('li', { key: index }, task)),
+        this.state.tasks.map((task, index) => ce('li', { key: index, onClick: e => this.handleDeleteClick(e, index) }, task)),
       ),
       ce('br'),
       ce('div', null,
