@@ -15,6 +15,8 @@ object Hello {
     document.getElementById("content").innerHTML = "This is a tutorial on using Scala.js."
 
     appendParagraph(document.getElementById("content"), "This is a new paragraph.")
+
+    drawToCanvas(document.getElementById("canvas").asInstanceOf[html.Canvas])
   }
 
   def appendParagraph(target: dom.Node, text: String): Unit = {
@@ -22,5 +24,15 @@ object Hello {
     val textNode = document.createTextNode(text)
     p.appendChild(textNode)
     target.appendChild(p)
+  }
+
+  @JSExportTopLevel("doClickStuff")
+  def doClickStuff(): Unit = {
+    println("Button clicked.")
+  }
+
+  def drawToCanvas(canvas: html.Canvas): Unit = {
+    val context = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
+    context.fillRect(100, 100, 200, 150)
   }
 }
