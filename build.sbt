@@ -19,6 +19,7 @@ lazy val server = (project in file("server")).settings(commonSettings).settings(
 		"com.typesafe.slick" %% "slick-codegen" % "3.3.3",
     "org.postgresql" % "postgresql" % "42.2.18",
     "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3",
+    "org.mindrot" % "jbcrypt" % "0.4",
     specs2 % Test
   )
 ).enablePlugins(PlayScala).
