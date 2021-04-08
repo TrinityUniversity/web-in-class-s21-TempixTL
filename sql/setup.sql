@@ -1,0 +1,3 @@
+CREATE USER tom WITH PASSWORD 'password';
+
+CREATE DATABASE tasklist WITH OWNER=tom;
